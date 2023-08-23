@@ -28,12 +28,13 @@ private slots:
     void addParagraph(const QString &paragraph);
 
 private:
-    void createActions();
+    void EstablirAccions();
     void createStatusBar();
     void createDockWindows();
 
     QTextEdit *textEdit;
     QListWidget *customerList;
+    QListWidget *customerList2;
     QListWidget *paragraphsList;
 
     QMenu *viewMenu;
