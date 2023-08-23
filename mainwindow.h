@@ -4,7 +4,10 @@
 #include <QMainWindow>
 
 QT_BEGIN_NAMESPACE
-namespace Ui { class MainWindow; }
+class QAction;
+class QListWidget;
+class QMenu;
+class QTextEdit;
 QT_END_NAMESPACE
 
 class MainWindow : public QMainWindow
@@ -12,10 +15,27 @@ class MainWindow : public QMainWindow
     Q_OBJECT
 
 public:
-    MainWindow(QWidget *parent = nullptr);
-    ~MainWindow();
+    explicit MainWindow(QWidget *parent = nullptr,
+                        Qt::WindowFlags flags = { });
+
+private slots:
+    void NovaPlanificacio();
+    void save();
+    void print();
+    void undo();
+    void about();
+    void insertCustomer(const QString &customer);
+    void addParagraph(const QString &paragraph);
 
 private:
-    Ui::MainWindow *ui;
+    void createActions();
+    void createStatusBar();
+    void createDockWindows();
+
+    QTextEdit *textEdit;
+    QListWidget *customerList;
+    QListWidget *paragraphsList;
+
+    QMenu *viewMenu;
 };
 #endif // MAINWINDOW_H
