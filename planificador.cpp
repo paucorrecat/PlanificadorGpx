@@ -1,16 +1,17 @@
 
 #include "planificador.h"
+#include "fitxergpx.h"
 #include <QListWidget>
 
 Planificador::Planificador(QWidget *parent)
     : QDockWidget{parent}
 {
 
-    QListWidget *zonaNW = new QListWidget;
-    QListWidget *zonaNE = new QListWidget;
-    QListWidget *zonaS = new QListWidget;
-    QSplitter *splV = new QSplitter;
-    QSplitter *splH = new QSplitter;
+    zonaNW = new QListWidget;
+    zonaNE = new QListWidget;
+    zonaS = new QListWidget;
+    splV = new QSplitter;
+    splH = new QSplitter;
 
     zonaNE->setBackgroundRole(QPalette::Text);
 
@@ -30,5 +31,6 @@ Planificador::Planificador(QWidget *parent)
     */
 
     this->setWidget(splV);
+    dades = new FitxerGpx;
 
 }

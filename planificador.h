@@ -5,6 +5,7 @@
 #include <QSplitter>
 #include <QDockWidget>
 #include <QListWidget>
+#include "fitxergpx.h"
 
 class Planificador : public QDockWidget
 {
@@ -14,7 +15,9 @@ public:
 
 private:
     QListWidget *zonaNW, *zonaNE, *zonaS;
-    QSplitter slp1, spl2;
+    QSplitter *splV, *splH;
+
+    FitxerGpx  *dades;
 
 signals:
 
