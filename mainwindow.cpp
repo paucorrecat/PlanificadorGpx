@@ -1,6 +1,7 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 #include <QtWidgets>
+#include "planificador.h"
 
 
 MainWindow::MainWindow(QWidget *parent, Qt::WindowFlags flags)
@@ -23,25 +24,10 @@ MainWindow::MainWindow(QWidget *parent, Qt::WindowFlags flags)
 void MainWindow::NovaPlanificacio()
 {
 
-    QDockWidget *dock = new QDockWidget(tr("Planificació"), this);
+    QDockWidget *dock = new Planificador( this);
 //                        dock->setAllowedAreas(Qt::BottomDockWidgetArea | Qt::TopDockWidgetArea);
-                        dock->setAllowedAreas(Qt::LeftDockWidgetArea | Qt::RightDockWidgetArea);
-    QSplitter *splitter1 = new QSplitter(dock); //Divisió en vertical
-    QSplitter *splitter2 = new QSplitter(splitter1); //Divisió en horitzontal
-    paragraphsList = new QListWidget(splitter1);
-    customerList = new QListWidget(splitter2); //TODO
-    customerList2 = new QListWidget(splitter2); //TODO
-//    dock->setWidget(customerList);
-    splitter2->setOrientation(Qt::Horizontal);
-    splitter2->addWidget(customerList);
-    splitter2->addWidget(customerList2);
 
-    splitter1->setOrientation(Qt::Vertical);
-    splitter1->addWidget(splitter2);
-    splitter1->addWidget(paragraphsList);
-    dock->setWidget(splitter1);
-
-//    addDockWidget(Qt::RightDockWidgetArea, dock);
+    dock->setAllowedAreas(Qt::LeftDockWidgetArea | Qt::RightDockWidgetArea);
     addDockWidget(Qt::TopDockWidgetArea, dock);
     viewMenu->addAction(dock->toggleViewAction());
 
