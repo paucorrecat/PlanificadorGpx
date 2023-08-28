@@ -17,7 +17,11 @@ private:
     QListWidget *zonaNW, *zonaNE, *zonaS;
     QSplitter *splV, *splH;
 
-    FitxerGpx  *dades;
+    QString NomFitxer;
+
+    FitxerGpx fitxerGpx();
+
+    void MostraDades();
 
 signals:
 
