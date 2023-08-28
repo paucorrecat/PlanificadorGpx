@@ -1,6 +1,6 @@
 
 #include "planificador.h"
-#include "fitxergpx.h"
+#include "FitxerGPX.h"
 #include <QListWidget>
 #include <qfiledialog.h>
 #include <QSettings>
@@ -12,6 +12,7 @@ Planificador::Planificador(QWidget *parent)
 {
     QFileInfo fitxer;
     FitxerGpx fitxergpx;
+    gProjecte project;
 
 
     zonaNW = new QListWidget;
@@ -55,6 +56,10 @@ Planificador::Planificador(QWidget *parent)
 
 
     fitxergpx.Llegir(NomFitxer);
+    project = fitxergpx.getProjecte();
+
+
+
 
 //    MostraDades();
 
@@ -62,25 +67,7 @@ Planificador::Planificador(QWidget *parent)
 
 
 void Planificador::MostraDades() {
-    int NumTracks;
-    int n, m;
-    gProjecte  Proj;
-    gTrk *Tr;
-  // Track TrackAct;
 
-/*
-    NumTracks = fitxerGpx->dades->tracks().count();
-    zonaNW->addItem("Número de tracks = " + QString::number(NumTracks));
-    for (n=0;n<NumTracks;n++) {
-        Tr = new gTrk;
-        Tr->Nom = fitxerGpx->dades->tracks().at(n).name();
-        Proj.LlTrk.append(*Tr);
-        zonaNW->addItem("   - Track " + QString::number(n+1) + " " + Tr->Nom);
-        for (m=0 ; m<fitxerGpx->dades-> )
-//        TrackAct = fitxerGpx->dades->tracks();
-    };
-
-*/
 
 
 }

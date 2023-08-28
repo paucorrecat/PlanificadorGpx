@@ -5,7 +5,7 @@
 #include <QSplitter>
 #include <QDockWidget>
 #include <QListWidget>
-#include "fitxergpx.h"
+#include "FitxerGPX.h"
 
 class Planificador : public QDockWidget
 {

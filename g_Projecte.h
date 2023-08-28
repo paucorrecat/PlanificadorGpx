@@ -47,13 +47,15 @@ class gProjecte
 {
 public:
     gProjecte();
-    QList<gTrk> LlTrk;
     QString Nom;
-    QString NomFitxer;
-
     metadata_t metadata;
+    QList<gTrk> LlTrk;
+    // Fitxer
+    QString NomFitxer;
+    QString Carpeta;
+    QString NomBaseFitxer;
 
-    void readMetadata(const QDomNode& xml, metadata_t& metadata);
+
 };
 
 #endif // G_PROJECTE_H

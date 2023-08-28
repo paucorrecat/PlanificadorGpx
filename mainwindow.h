@@ -24,8 +24,8 @@ private slots:
     void print();
     void undo();
     void about();
-    void insertCustomer(const QString &customer);
-    void addParagraph(const QString &paragraph);
+//    void insertCustomer(const QString &customer);
+//    void addParagraph(const QString &paragraph);
 
 private:
     void EstablirAccions();

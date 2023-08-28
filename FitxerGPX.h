@@ -7,11 +7,52 @@
 #include <QObject>
 #include <QUrl>
 #include "g_Projecte.h"
-#include "g_Wpt.h"
+//#include "g_Wpt.h"
 
-#define NOIDX -1
 
-/*
+class FitxerGpx
+{
+public:
+    FitxerGpx();
+
+    gProjecte getProjecte();
+    void setProjecte(gProjecte Proj);
+
+    QString NomFitxer;
+    QString Carpeta;
+    QString NomBaseFitxer;
+
+    void Llegir(QString _NomFitxer);
+    void Guardar(QString _NomFitxer);
+
+private:
+
+
+    gProjecte Prjct;
+    gProjecte PrjtBuit;
+
+    gTrk ll_Trk(const QDomElement& xml);
+    gTrkseg ll_Trkseg(const QDomElement& xml);
+    gTrkpt ll_Trkpt(const QDomElement& xml);
+
+    /*
+    void readWpt(const QDomNode& xml, gWpt &wpt);
+
+    void readMetadata(const QDomNode& xml, metadata_t& metadata);
+    QDateTime parseTimestamp(const QString& timetext, int &tzoffset);
+    */
+
+};
+
+
+#endif // FITXERGPX_H
+
+/**********************************************/
+/* Documentació extra per a futures millores  */
+/**********************************************/
+
+/* Per si vull tenir en compte possibles versions de xml
+ *
 const char* gpx_links_gpx_ns = "http://www.topografix.com/GPX/1/1";
 const char* gpx_links_xsi_ns = "http://www.w3.org/2001/XMLSchema-instance";
 const char* gpx_links_gpxx_ns = "http://www.garmin.com/xmlschemas/GpxExtensions/v3";
@@ -24,6 +65,7 @@ const char* gpx_links_tp1_ns = "http://www.garmin.com/xmlschemas/TrackPointExten
 const char* gpx_links_gpxdata_ns = "http://www.cluetrust.com/XML/GPXDATA/1/0";
 */
 
+/* Per si vull classificar les activitats com QMapShack"
 enum act10_e {
     // activity flags
     eActNone = 0x00000000,
@@ -39,8 +81,9 @@ enum act10_e {
     eActTrain = 0x00400000,
     eActMask = 0xFFC00000  ///< mask for activity flags
 };
+*/
 
-
+/* Per portar l'historial de canvis a l'estil de QMapShack
 struct history_event_t {
     QDateTime time;
     QString hash;
@@ -63,51 +106,7 @@ struct history_t {
     qint32 histIdxCurrent;
     QList<history_event_t> events;
 };
+*/
 
 
 
-class FitxerGpx
-{
-public:
-    //FitxerGpx(QString _NomFitxer);
-    FitxerGpx();
-
-  //  Data *dades; Això és de GPXSee
-    QString NomFitxer;
-    metadata_t metadata;
-
-    void Llegir(QString _NomFitxer);
-    void Guardar(QString _NomFitxer);
-
-    // Polimorfisme de readXML
-    void readXml(const QDomNode& xml, const QString& tag, qint32& value);
-    void readXml(const QDomNode& xml, const QString& tag, double& value);
-    void readXml(const QDomNode& xml, const QString& tag, act10_e& value);
-    template <typename T>
-    void readXml(const QDomNode& xml, const QString& tag, T& value);
-    void readXml(const QDomNode& xml, const QString& tag, QString& value);
-    void readXml(const QDomNode& xml, const QString& tag, QString& value, bool& isHtml);
-    void readXml(const QDomNode& xml, const QString& tag, QDateTime& value);
-    void readXml(const QDomNode& xml, const QString& tag, QList<link_t>& l);
-    void readXml(const QDomNode& xml, history_t& history);
-    void readXml(const QDomNode& xml, const QString& tag, QPoint& offsetBubble, quint32& widthBubble) ;
-
-    void readTrk(const QDomNode& xml, gTrk& trk);
-    void readTrkpt(const QDomNode& xml,  gTrkpt &trkpt);
-    void readWpt(const QDomNode& xml, gWpt &wpt);
-
-    void readMetadata(const QDomNode& xml, metadata_t& metadata);
-    QDateTime parseTimestamp(const QString& timetext, int &tzoffset);
-
-    gProjecte getProjecte();
-    void setProjecte(gProjecte Proj);
-
-private:
-    gProjecte project;
-
-};
-
-
-
-
-#endif // FITXERGPX_H

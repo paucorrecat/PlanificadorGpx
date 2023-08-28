@@ -4,15 +4,21 @@
 #include<QDateTime>
 #include"g_Projecte.h"
 
+
 class gWpt
 {
 public:
     gWpt();
 
+    const int no_ele= -10000;
+    const int no_hr = -1;
+    const QDateTime no_time = QDateTime(QDate(1800, 1, 1), QTime(0, 0, 0));
+
     double lat;
     double lon;
     double ele;
     QDateTime time;
+
     uint magvar;
     uint geoidheight;
     QString name;
