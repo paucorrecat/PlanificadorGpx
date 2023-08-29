@@ -50,6 +50,7 @@ public:
         link_t linkauthor;
         link_t link;
         QDateTime time;
+        QRectF bounds;
     } metadata;
 
     QList<gTrk> LlTrk;
@@ -59,7 +60,7 @@ public:
 
 #endif // G_PROJECTE_H
 
-// NOTE: Dades complertes metadata
+// DOC: Dades complertes metadata
 /* Versió complerta que de moment no usaré
 struct metadata_t {
     metadata_t() : time(QDateTime::currentDateTimeUtc()) {}

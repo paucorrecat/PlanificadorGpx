@@ -33,15 +33,6 @@ void FitxerGpx::Llegir(QString _NomFitxer)
     int errorColumn;
 
 
-    // Per si és un "llegir" sobre un que ja s'havia llegit
-    // Ho posa tot a 0
-    /* No cal
-    NomFitxer = "";
-    Carpeta = "";
-    NomBaseFitxer = "";
-    project=PrjtBuit;
-    */
-
     // Llegir el xml
     if (!file.open(QIODevice::ReadOnly)) {
         throw QObject::tr("Ha fallat obrint %1").arg(_NomFitxer);
@@ -78,18 +69,24 @@ void FitxerGpx::Llegir(QString _NomFitxer)
     const QDomNode& xmlMetadata = xmlGpx.namedItem("metadata");
     if (xmlMetadata.isElement()) {
         project.Nom = xmlMetadata.firstChildElement("name").text();
-        // TODO: Acabar de llegir matadata
-        /*
         QDomElement xmlAuth = xmlMetadata.firstChildElement("author");
         if (xmlAuth.isElement()) {
             project.metadata.author=xmlAuth.firstChildElement("name").text();
             QDomElement xmllnk = xmlMetadata.firstChildElement("link");
             if (xmllnk.isElement()) {
-                project.metadata.author=xmlAuth.firstChildElement("name").text();
-                project.metadata.linkauthor.uri = xmllnk.firstChildElement("href").text();
-
+                project.metadata.linkauthor.uri = xmllnk.attribute("href");
+                project.metadata.linkauthor.text=xmllnk.firstChildElement("text").text();
+            }
         }
-        */
+        int tz;
+        project.metadata.time = parseTimestamp( xmlMetadata.firstChildElement("time").text(), tz );
+        QDomElement xmlbnd = xmlMetadata.firstChildElement("bounds");
+        if (xmlbnd.isElement()) {
+            project.metadata.bounds.setLeft(xmlbnd.attribute("minlon").toDouble());
+            project.metadata.bounds.setRight(xmlbnd.attribute("maxlon").toDouble());
+            project.metadata.bounds.setBottom(xmlbnd.attribute("minlat").toDouble());
+            project.metadata.bounds.setTop(xmlbnd.attribute("maxlat").toDouble());
+        }
 
     }
 
@@ -107,6 +104,7 @@ void FitxerGpx::Llegir(QString _NomFitxer)
 gTrk FitxerGpx::ll_Trk(const QDomElement& xml) {
     // TODO: Llegir en nom del track
     gTrk trk;
+    trk.name = xml.firstChildElement("name").text();
 
     QDomElement child = xml.firstChildElement("trkseg");
     while (!child.isNull()) {
@@ -129,12 +127,115 @@ gTrkseg FitxerGpx::ll_Trkseg(const QDomElement& xml) {
 
 gTrkpt FitxerGpx::ll_Trkpt(const QDomElement& xml) {
     // TODO: Llegir el time del trkpt
+    int tz; // Per històries del us horari
     gTrkpt trkpt;
     trkpt.ele =xml.firstChildElement("ele").text().toInt();
     trkpt.lat =xml.attribute("lat").toDouble();
     trkpt.lon =xml.attribute("lon").toDouble();
+    trkpt.time = parseTimestamp(xml.firstChildElement("time").text(),tz);
     return trkpt;
 }
+
+QDateTime FitxerGpx::parseTimestamp(const QString& timetext, int& tzoffset) {
+    const QRegularExpression tzRE("[-+]\\d\\d:\\d\\d$");
+    int i;
+
+    tzoffset = 0;
+    bool applyTzOffset = false;
+
+    QString format = "yyyy-MM-dd'T'hh:mm:ss";
+
+    i = timetext.indexOf(".");
+    if (i != -1) {
+        if (timetext[i + 1] == '0') {
+            format += ".zzz";
+        } else {
+            format += ".z";
+        }
+    }
+
+    QRegularExpressionMatch match = tzRE.match(timetext);
+    // trailing "Z" explicitly declares the timestamp to be UTC
+    if (timetext.indexOf("Z") != -1) {
+        format += "'Z'";
+        applyTzOffset = true;
+    }
+    else if ((i = match.capturedStart(0)) != -1) {
+        // trailing timezone offset [-+]HH:MM present
+        // This does not match the original intentions of the GPX
+        // file format but appears to be found occasionally in
+        // the wild.  Try our best parsing it.
+
+        // add the literal string to the format so fromString()
+        // will succeed
+        format += "'";
+        format += timetext.right(6);
+        format += "'";
+
+        // calculate the offset
+        int offsetHours(timetext.mid(i + 1, 2).toUInt());
+        int offsetMinutes(timetext.mid(i + 4, 2).toUInt());
+        if (timetext[i] == '-') {
+            tzoffset = -(60 * offsetHours + offsetMinutes);
+        } else {
+            tzoffset = 60 * offsetHours + offsetMinutes;
+        }
+        tzoffset *= 60;  // seconds
+        applyTzOffset = true;
+    }
+
+    QDateTime datetime = QDateTime::fromString(timetext, format);
+
+    if (applyTzOffset) {
+        datetime.setOffsetFromUtc(tzoffset);
+    } else {  // if timetext has no 'Z' and no [-+]HH:MM then this is local time then simply switch to UTC without
+        // applying any offset
+        datetime = datetime.toUTC();
+    }
+
+    return datetime;
+}
+// DOC: Algorisme de QDateTime a QString, tret de QMapShack, que és d'on he tret el de parse
+/*
+QString FitxerGpx::datetime2string(const QDateTime& time, time_format_e format, const QPointF& pos) {
+    QTimeZone tz;
+
+    tz_mode_e tmpMode = (pos != NOPOINTF) ? timeZoneMode : eTZLocal;
+
+    switch (tmpMode) {
+    case eTZUtc:
+        tz = QTimeZone("UTC");
+        break;
+
+    case eTZLocal:
+        tz = QTimeZone(QTimeZone::systemTimeZoneId());
+        break;
+
+    case eTZAuto:
+        tz = QTimeZone(pos2timezone(pos));
+        break;
+
+    case eTZSelected:
+        tz = QTimeZone(timeZone);
+        break;
+    }
+
+    QDateTime tmp = time.toTimeZone(tz);
+
+    switch (format) {
+    case eTimeFormatLong:
+        return tmp.toString(QLocale().dateTimeFormat(useShortFormat ? QLocale::ShortFormat : QLocale::LongFormat));
+    case eTimeFormatShort:
+        return tmp.toString(QLocale().dateTimeFormat(QLocale::ShortFormat));
+    case eTimeFormatIso:
+        return tmp.toString(Qt::ISODate);
+    }
+
+    return tmp.toString(QLocale().dateTimeFormat(QLocale::LongFormat));
+}
+*/
+
+
 
 // TODO: Llegir tots els atributs del track
 /*

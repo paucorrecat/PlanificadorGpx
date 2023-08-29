@@ -6,6 +6,7 @@
 #include <QString>
 #include <QObject>
 #include <QUrl>
+#include <QRegularExpression>
 #include "g_Projecte.h"
 //#include "g_Wpt.h"
 
@@ -40,6 +41,7 @@ private:
     gTrk ll_Trk(const QDomElement& xml);
     gTrkseg ll_Trkseg(const QDomElement& xml);
     gTrkpt ll_Trkpt(const QDomElement& xml);
+    QDateTime parseTimestamp(const QString& timetext, int& tzoffset);
 
     /*
     void readWpt(const QDomNode& xml, gWpt &wpt);
@@ -53,12 +55,14 @@ private:
 
 #endif // FITXERGPX_H
 
+
 /**********************************************/
 /* Documentació extra per a futures millores  */
 /**********************************************/
 
+// DOC: links a especificacions de gpx diferents
+
 /* Per si vull tenir en compte possibles versions de xml
- *
 const char* gpx_links_gpx_ns = "http://www.topografix.com/GPX/1/1";
 const char* gpx_links_xsi_ns = "http://www.w3.org/2001/XMLSchema-instance";
 const char* gpx_links_gpxx_ns = "http://www.garmin.com/xmlschemas/GpxExtensions/v3";
@@ -71,7 +75,8 @@ const char* gpx_links_tp1_ns = "http://www.garmin.com/xmlschemas/TrackPointExten
 const char* gpx_links_gpxdata_ns = "http://www.cluetrust.com/XML/GPXDATA/1/0";
 */
 
-/* Per si vull classificar les activitats com QMapShack"
+// DOC: Per si vull classificar les activitats com QMapShack"
+/*
 enum act10_e {
     // activity flags
     eActNone = 0x00000000,
@@ -89,7 +94,8 @@ enum act10_e {
 };
 */
 
-/* Per portar l'historial de canvis a l'estil de QMapShack
+// DOC: Per portar l'historial de canvis a l'estil de QMapShack
+/*
 struct history_event_t {
     QDateTime time;
     QString hash;
