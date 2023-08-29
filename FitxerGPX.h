@@ -17,13 +17,19 @@ public:
 
     gProjecte getProjecte();
     void setProjecte(gProjecte Proj);
-
+    // Fitxer
     QString NomFitxer;
     QString Carpeta;
     QString NomBaseFitxer;
 
+    //Atributs (Qui i com s'ha fet el fitxer)
+
+
+
+
     void Llegir(QString _NomFitxer);
     void Guardar(QString _NomFitxer);
+
 
 private:
 

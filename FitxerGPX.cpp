@@ -35,11 +35,12 @@ void FitxerGpx::Llegir(QString _NomFitxer)
 
     // Per si és un "llegir" sobre un que ja s'havia llegit
     // Ho posa tot a 0
+    /* No cal
     NomFitxer = "";
     Carpeta = "";
     NomBaseFitxer = "";
-    Prjct=PrjtBuit;
-
+    project=PrjtBuit;
+    */
 
     // Llegir el xml
     if (!file.open(QIODevice::ReadOnly)) {
@@ -56,29 +57,49 @@ void FitxerGpx::Llegir(QString _NomFitxer)
     NomFitxer = info.fileName();
     Carpeta = info.absolutePath();
     NomBaseFitxer = info.baseName();
-    Prjct.NomFitxer = NomFitxer;
-    Prjct.Carpeta=Carpeta;
-    Prjct.NomBaseFitxer=NomBaseFitxer;
+    project.fitxer.NomFitxer = NomFitxer;
+    project.fitxer.Carpeta=Carpeta;
+    project.fitxer.NomBaseFitxer=NomBaseFitxer;
 
 
     QDomElement xmlGpx = xml.documentElement();
     if (xmlGpx.tagName() != "gpx") {
         throw QObject::tr("No és un fitxer GPX: %1").arg(_NomFitxer);
     }
-// TODO: Llegir metadata
-/*
+
+    //Atributs
+    project.gpx.xmlns =xmlGpx.attribute("xmlns");
+    project.gpx.xmlns_xsi =xmlGpx.attribute("xmlns:xsi");
+    project.gpx.xsi_schemaLocation =xmlGpx.attribute("xsi:schemaLocation");
+    project.gpx.creator =xmlGpx.attribute("creator");
+    project.gpx.version =xmlGpx.attribute("version");
+
+    //Metadata
     const QDomNode& xmlMetadata = xmlGpx.namedItem("metadata");
     if (xmlMetadata.isElement()) {
-        readMetadata(xmlMetadata, project.metadata);
-    }
-*/
+        project.Nom = xmlMetadata.firstChildElement("name").text();
+        // TODO: Acabar de llegir matadata
+        /*
+        QDomElement xmlAuth = xmlMetadata.firstChildElement("author");
+        if (xmlAuth.isElement()) {
+            project.metadata.author=xmlAuth.firstChildElement("name").text();
+            QDomElement xmllnk = xmlMetadata.firstChildElement("link");
+            if (xmllnk.isElement()) {
+                project.metadata.author=xmlAuth.firstChildElement("name").text();
+                project.metadata.linkauthor.uri = xmllnk.firstChildElement("href").text();
 
+        }
+        */
+
+    }
 
     QDomElement child = xmlGpx.firstChildElement("trk");
     while (!child.isNull()) {
         project.LlTrk.append(ll_Trk(child));
         child = child.nextSiblingElement("trk");
     }
+
+    setProjecte(project);
 
 }
 

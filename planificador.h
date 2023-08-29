@@ -19,7 +19,7 @@ private:
 
     QString NomFitxer;
 
-    FitxerGpx fitxerGpx();
+    FitxerGpx fitxerGpx;
 
     void MostraDades();
 

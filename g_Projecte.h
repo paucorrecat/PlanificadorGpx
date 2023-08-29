@@ -3,16 +3,12 @@
 
 #include <QList>
 #include <QDomDocument>
-#include <QUrl>
 #include <QDateTime>
 #include <QRectF>
+#include "g_general.h"
 #include "g_Trk.h"
-
-struct link_t {
-    QUrl uri;
-    QString text;
-    QString type;
-};
+#include "g_Wpt.h"
+#include "g_Rte.h"
 
 struct person_t {
     QString name;
@@ -27,6 +23,44 @@ struct copyright_t {
     QString license;
 };
 
+
+class gProjecte
+{
+public:
+    gProjecte();
+    // Característiques GPX
+    struct gpx_t  {
+        QString xmlns; //XML namespace
+        QString xmlns_xsi; //XML namespace prefix (Xml Schema Instance)
+        QString xsi_schemaLocation; //XML namespace
+        QString creator; // El que ha fet el fitxer gpx, no l'autor del track
+        QString version; //Suposo que la versió de XML
+    } gpx;
+    // Fitxer
+    struct fitxer_t {
+        QString NomFitxer;
+        QString Carpeta;
+        QString NomBaseFitxer;
+    } fitxer;
+
+
+    QString Nom;
+    struct metadata_t {
+        QString author;
+        link_t linkauthor;
+        link_t link;
+        QDateTime time;
+    } metadata;
+
+    QList<gTrk> LlTrk;
+    QList<gWpt> LlWpt;
+    QList<gRte> LlRte;
+};
+
+#endif // G_PROJECTE_H
+
+// NOTE: Dades complertes metadata
+/* Versió complerta que de moment no usaré
 struct metadata_t {
     metadata_t() : time(QDateTime::currentDateTimeUtc()) {}
     QString name;
@@ -40,22 +74,4 @@ struct metadata_t {
     // -- all gpx tags - stop
     QMap<QString, QVariant> extensions;
 };
-
-
-
-class gProjecte
-{
-public:
-    gProjecte();
-    QString Nom;
-    metadata_t metadata;
-    QList<gTrk> LlTrk;
-    // Fitxer
-    QString NomFitxer;
-    QString Carpeta;
-    QString NomBaseFitxer;
-
-
-};
-
-#endif // G_PROJECTE_H
+*/

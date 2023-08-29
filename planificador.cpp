@@ -11,7 +11,7 @@ Planificador::Planificador(QWidget *parent)
     : QDockWidget{parent}
 {
     QFileInfo fitxer;
-    FitxerGpx fitxergpx;
+    //FitxerGpx fitxergpx;
     gProjecte project;
 
 
@@ -55,19 +55,23 @@ Planificador::Planificador(QWidget *parent)
     }
 
 
-    fitxergpx.Llegir(NomFitxer);
-    project = fitxergpx.getProjecte();
+    fitxerGpx.Llegir(NomFitxer);
+    project = fitxerGpx.getProjecte();
 
 
 
 
-//    MostraDades();
+
+    MostraDades();
+
 
 }
 
 
 void Planificador::MostraDades() {
 
-
-
+    gProjecte project;
+    project = fitxerGpx.getProjecte();
+    zonaNW->addItem("GPX: " + project.Nom);
+    zonaNW->addItem("  GPX:Creator " + project.gpx.creator);
 }

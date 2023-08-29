@@ -2,7 +2,7 @@
 #define G_WPT_H
 
 #include<QDateTime>
-#include"g_Projecte.h"
+#include"g_general.h"
 
 
 class gWpt

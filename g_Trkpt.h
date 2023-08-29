@@ -3,13 +3,14 @@
 
 #include<QDateTime>
 
+static const int no_ele= -10000;
+static const int no_hr = -1;
+// WARNING: No tinc clara la gestió de memòria d'això
+static const QDateTime no_time = QDateTime(QDate(1800, 1, 1), QTime(0, 0, 0));
+
 class gTrkpt
 {
 public:
-
-    const int no_ele= -10000;
-    const int no_hr = -1;
-    const QDateTime no_time = QDateTime(QDate(1800, 1, 1), QTime(0, 0, 0));
 
     gTrkpt();
     double lat;
