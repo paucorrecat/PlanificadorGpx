@@ -18,7 +18,7 @@ Planificador::Planificador(QWidget *parent)
 
     zonaNW = new ArbreGpx;
     zonaNE = new QListWidget;
-    zonaS = new QListWidget;
+    zonaS = new taulaTrams("persones");
     splV = new QSplitter;
     splH = new QSplitter;
 
@@ -76,4 +76,7 @@ void Planificador::MostraDades() {
     zonaNE->addItem("GPX: " + project.Nom);
     zonaNE->addItem("  GPX:Creator " + project.gpx.creator);
     //zonaNE->addItem(projecte.)
+
+//    zonaS = taulaTrams();
+
 }

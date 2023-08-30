@@ -1,4 +1,4 @@
-QT       += core xml
+QT       += core xml sql
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
@@ -21,7 +21,8 @@ SOURCES += \
     FitxerGPX.cpp \
     planificador.cpp \
     main.cpp \
-    mainwindow.cpp
+    mainwindow.cpp \
+    taulaTrams.cpp
 
 HEADERS += \
     GeoMath.h \
@@ -37,7 +38,8 @@ HEADERS += \
     arbreestructura.h \
     planificador.h \
     mainwindow.h \
-    qmath.h
+    qmath.h \
+    taulaTrams.h
 
 TRANSLATIONS += \
     PlanificadorGpx_ca_ES.ts

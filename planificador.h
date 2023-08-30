@@ -7,6 +7,8 @@
 #include <QListWidget>
 #include "FitxerGPX.h"
 #include "arbreestructura.h"
+#include "taulaTrams.h"
+
 
 class Planificador : public QDockWidget
 {
@@ -15,7 +17,8 @@ public:
     explicit Planificador(QWidget *parent = nullptr);
 
 private:
-    QListWidget *zonaNE, *zonaS;
+    QListWidget *zonaNE;
+    taulaTrams *zonaS;
     ArbreGpx *zonaNW;
     QSplitter *splV, *splH;
 
