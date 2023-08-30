@@ -34,6 +34,12 @@ static bool createConnection()
     }
 
     QSqlQuery query;
+
+    query.exec("create table ppp (id int primary key, "
+               "nom varchar(20), punts int)");
+    query.exec("insert into tracks values(101, 'Prova', 2345)");
+
+
     query.exec("create table person (id int primary key, "
                "firstname varchar(20), lastname varchar(20))");
     query.exec("insert into person values(101, 'Danny', 'Young')");

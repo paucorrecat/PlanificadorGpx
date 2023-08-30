@@ -18,7 +18,7 @@ Planificador::Planificador(QWidget *parent)
 
     zonaNW = new ArbreGpx;
     zonaNE = new QListWidget;
-    zonaS = new taulaTrams("person");
+
     splV = new QSplitter;
     splH = new QSplitter;
 
@@ -29,7 +29,6 @@ Planificador::Planificador(QWidget *parent)
     splH->addWidget(zonaNE);
     splV->setOrientation(Qt::Vertical);
     splV->addWidget(splH);
-    splV->addWidget(zonaS);
 
     /* Per ajustar mesures, de moment no ho usaré
 
@@ -64,6 +63,8 @@ Planificador::Planificador(QWidget *parent)
 
     zonaNW->Representa(project);
     MostraDades();
+    zonaS = new taulaTrams(project);
+    splV->addWidget(zonaS);
 
 
 }

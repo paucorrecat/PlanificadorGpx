@@ -5,6 +5,7 @@
 #define TABLEEDITOR_H
 
 #include <QDialog>
+#include "g_Projecte.h"
 
 QT_BEGIN_NAMESPACE
 class QDialogButtonBox;
@@ -17,7 +18,8 @@ class taulaTrams : public QWidget
 {
     Q_OBJECT
 public:
-    explicit taulaTrams(const QString &tableName, QWidget *parent = nullptr);
+    explicit taulaTrams(const gProjecte &prj, QWidget *parent = nullptr);
+    void CarregaTrams(gProjecte prj);
 
 private slots:
     void submit();

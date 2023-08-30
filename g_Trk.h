@@ -16,7 +16,10 @@ public:
     QString number;
     QString type;
     QList<gTrkseg> segs;
+    double NumPunts() const;
     double Distancia() const;
+    double Puja() const;
+    double Baixa() const;
 };
 
 #endif // G_TRK_H
