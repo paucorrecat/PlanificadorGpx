@@ -16,6 +16,7 @@ public:
     QString number;
     QString type;
     QList<gTrkseg> segs;
+    double Distancia() const;
 };
 
 #endif // G_TRK_H

@@ -1,4 +1,4 @@
-QT       += core  xml
+QT       += core xml
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
@@ -10,31 +10,34 @@ CONFIG += c++17
 DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 SOURCES += \
-    FitxerGPX.cpp \
-    arbreestructura.cpp \
-    g_Projecte.cpp \
+    GeoMath.cpp \
     g_Rte.cpp \
     g_Trk.cpp \
     g_Trkpt.cpp \
     g_Trkseg.cpp \
     g_Wpt.cpp \
+    g_Projecte.cpp \
+    arbreestructura.cpp \
+    FitxerGPX.cpp \
+    planificador.cpp \
     main.cpp \
-    mainwindow.cpp \
-    planificador.cpp
+    mainwindow.cpp
 
 HEADERS += \
-    FitxerGPX.h \
-    arbreestructura.h \
+    GeoMath.h \
     config.h \
-    g_Projecte.h \
+    g_general.h \
     g_Rte.h \
     g_Trk.h \
     g_Trkpt.h \
     g_Trkseg.h \
     g_Wpt.h \
-    g_general.h \
+    g_Projecte.h \
+    FitxerGPX.h \
+    arbreestructura.h \
+    planificador.h \
     mainwindow.h \
-    planificador.h
+    qmath.h
 
 TRANSLATIONS += \
     PlanificadorGpx_ca_ES.ts
@@ -46,3 +49,7 @@ CONFIG += embed_translations
 qnx: target.path = /tmp/$${TARGET}/bin
 else: unix:!android: target.path = /opt/$${TARGET}/bin
 !isEmpty(target.path): INSTALLS += target
+
+RESOURCES +=
+
+FORMS +=

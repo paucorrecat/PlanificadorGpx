@@ -6,6 +6,7 @@
 #include <QDockWidget>
 #include <QListWidget>
 #include "FitxerGPX.h"
+#include "arbreestructura.h"
 
 class Planificador : public QDockWidget
 {
@@ -14,7 +15,8 @@ public:
     explicit Planificador(QWidget *parent = nullptr);
 
 private:
-    QListWidget *zonaNW, *zonaNE, *zonaS;
+    QListWidget *zonaNE, *zonaS;
+    ArbreGpx *zonaNW;
     QSplitter *splV, *splH;
 
     QString NomFitxer;

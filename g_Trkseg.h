@@ -8,6 +8,10 @@ class gTrkseg
 public:
     gTrkseg();
     QList<gTrkpt> punts;
+    double Distancia() const;
+    double Puja() const ;
+    double Baixa() const ;
+
 };
 
 #endif // G_TRKSEG_H

@@ -4,24 +4,33 @@
 #include <QDomDocument>
 #include <QIcon>
 #include <QTreeWidget>
+#include "g_Projecte.h"
 
-class ArbreEstructura : public QTreeWidget
+class ArbreGpx : public QTreeWidget
 {
     Q_OBJECT
 
 public:
-    explicit ArbreEstructura(QWidget *parent = nullptr);
+    ArbreGpx(QWidget *parent = nullptr);
+    void Representa(gProjecte prj);
+
+
+/*
+protected:
+#if !defined(QT_NO_CONTEXTMENU) && !defined(QT_NO_CLIPBOARD)
+    void contextMenuEvent(QContextMenuEvent *event) override;
+#endif
+*/
+
+//private slots:
+//    void updateDomElement(const QTreeWidgetItem *item, int column);
 
 private:
-    void parseFolderElement(const QTreeWidgetItem &element,
-                            QTreeWidgetItem *parentItem = nullptr);
-    QTreeWidgetItem *createItem(const QDomElement &element,
-                                QTreeWidgetItem *parentItem = nullptr);
 
-    QDomDocument domDocument;
     QIcon folderIcon;
     QIcon bookmarkIcon;
 
+    QTreeWidgetItem addItem(QString name, QString description,QTreeWidgetItem *parent = nullptr);
 
 };
 

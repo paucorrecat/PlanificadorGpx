@@ -1,6 +1,7 @@
 
 #include "planificador.h"
 #include "FitxerGPX.h"
+#include "arbreestructura.h"
 #include <QListWidget>
 #include <qfiledialog.h>
 #include <QSettings>
@@ -15,7 +16,7 @@ Planificador::Planificador(QWidget *parent)
     gProjecte project;
 
 
-    zonaNW = new QListWidget;
+    zonaNW = new ArbreGpx;
     zonaNE = new QListWidget;
     zonaS = new QListWidget;
     splV = new QSplitter;
@@ -61,7 +62,7 @@ Planificador::Planificador(QWidget *parent)
 
 
 
-
+    zonaNW->Representa(project);
     MostraDades();
 
 
@@ -72,6 +73,7 @@ void Planificador::MostraDades() {
 
     gProjecte project;
     project = fitxerGpx.getProjecte();
-    zonaNW->addItem("GPX: " + project.Nom);
-    zonaNW->addItem("  GPX:Creator " + project.gpx.creator);
+    zonaNE->addItem("GPX: " + project.Nom);
+    zonaNE->addItem("  GPX:Creator " + project.gpx.creator);
+    //zonaNE->addItem(projecte.)
 }
