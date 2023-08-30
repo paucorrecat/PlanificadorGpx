@@ -27,6 +27,7 @@ SOURCES += \
 HEADERS += \
     GeoMath.h \
     config.h \
+    dbconnection.h \
     g_general.h \
     g_Rte.h \
     g_Trk.h \

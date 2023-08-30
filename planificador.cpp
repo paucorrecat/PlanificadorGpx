@@ -18,7 +18,7 @@ Planificador::Planificador(QWidget *parent)
 
     zonaNW = new ArbreGpx;
     zonaNE = new QListWidget;
-    zonaS = new taulaTrams("persones");
+    zonaS = new taulaTrams("person");
     splV = new QSplitter;
     splH = new QSplitter;
 

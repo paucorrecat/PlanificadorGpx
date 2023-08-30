@@ -2,12 +2,17 @@
 #include <QtWidgets>
 #include <QtSql>
 
+#include "dbconnection.h"
 #include "taulaTrams.h"
 
 //! [0]
 taulaTrams::taulaTrams(const QString &tableName, QWidget *parent)
     : QWidget(parent)
 {
+
+    if (!createConnection())
+        return;
+
     model = new QSqlTableModel(this);
     model->setTable(tableName);
     model->setEditStrategy(QSqlTableModel::OnManualSubmit);
